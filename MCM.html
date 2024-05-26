@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calculadora de MCM</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    input[type="text"] {
+      padding: 5px;
+      font-size: 16px;
+      width: 300px;
+    }
+    button {
+      padding: 5px 10px;
+      font-size: 16px;
+    }
+    #resultado {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Calculadora de MCM</h1>
+  <input type="text" id="numeros" placeholder="Ingresa los números separados por comas">
+  <button onclick="calcularMCM()">Calcular MCM</button>
+  <div id="resultado"></div>
+
+  <script>
+    /**
+     * Función para calcular el máximo común divisor (MCD) de dos números
+     * utilizando el algoritmo de Euclides
+     * @param {number} a - Primer número
+     * @param {number} b - Segundo número
+     * @returns {number} El máximo común divisor de a y b
+     */
+    function mcd(a, b) {
+      return b === 0 ? a : mcd(b, a % b);
+    }
+
+    /**
+     * Función para calcular el mínimo común múltiplo (MCM) de una lista de números
+     * @param {string} numeros - Una cadena de números separados por comas
+     * @returns {number} El mínimo común múltiplo de la lista de números
+     */
+    function mcm(numeros) {
+      const listaNumeros = numeros.split(',').map(num => parseInt(num.trim()));
+      let result = listaNumeros[0];
+
+      for (let i = 1; i < listaNumeros.length; i++) {
+        const a = result;
+        const b = listaNumeros[i];
+        const mcdAB = mcd(a, b);
+        result = (a * b) / mcdAB;
+      }
+
+      return result;
+    }
+
+    /**
+     * Función para calcular el MCM de los números ingresados
+     */
+    function calcularMCM() {
+      const numerosInput = document.getElementById('numeros').value;
+      if (numerosInput.trim() === '') {
+        document.getElementById('resultado').textContent = 'Por favor, ingresa los números separados por comas.';
+      } else {
+        const minimoComunMultiplo = mcm(numerosInput);
+        document.getElementById('resultado').textContent = `El mínimo común múltiplo de ${numerosInput} es ${minimoComunMultiplo}.`;
+      }
+    }
+  </script>
+</body>
+</html>
